@@ -1,0 +1,9 @@
+{
+    "*.zshrc": {
+        "tabsize": 2,
+        "tabstospaces": true
+    },
+    "colorscheme": "monokai",
+    "mkparents": true,
+    "colorscheme": "houston"
+}
