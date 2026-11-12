@@ -1,0 +1,29 @@
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Shared Bash/Zsh configuration. The installer sets paths and opt-in features.
+if [ -n "${ZSH_VERSION:-}" ] && [ "${OH_RY_ZSH_OMZ:-1}" = "1" ]; then
+  export ZSH="$HOME/.oh-my-zsh"
+  if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+    ZSH_THEME="houston"
+    ZSH_CUSTOM="$ZSH/custom"
+    plugins=(git docker zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+    if [[ "$OSTYPE" == darwin* ]]; then
+      plugins=(macos "${plugins[@]}")
+    fi
+    source "$ZSH/oh-my-zsh.sh"
+  fi
+fi
+
+if [ "${OH_RY_ZSH_ALIAS:-0}" = "1" ]; then
+  if command -v batcat >/dev/null 2>&1; then
+    alias cat="batcat"
+  elif command -v bat >/dev/null 2>&1; then
+    alias cat="bat"
+  fi
+  if command -v micro >/dev/null 2>&1; then alias nano="micro"; fi
+else
+  # Only remove aliases owned by this configuration when it is sourced again.
+  case "$(alias cat 2>/dev/null)" in "alias cat='bat'"|"alias cat='batcat'"|"cat=bat"|"cat=batcat") unalias cat ;; esac
+  case "$(alias nano 2>/dev/null)" in "alias nano='micro'"|"nano=micro") unalias nano ;; esac
+fi
